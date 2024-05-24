@@ -1,7 +1,7 @@
 /* global bootstrap: false */
 (function ($) {
   "use strict";
-  /* ----------- navbar ------------ */
+  let id = window.location.href.split("?")[0].split("/").pop().substring(1);
   function processMenu(speed, outer = false) {
     const menu = $("#nav-menu");
     if (menu.length) {
@@ -15,19 +15,52 @@
       }
     }
   }
+
+  function focusNave(id) {
+    $(".nav-link").each(function () {
+      $(this).removeClass("active");
+      if ($(this).data("value") === id) {
+        $(this).addClass("active").siblings().removeClass("active");
+      }
+    });
+  }
+  focusNave(id);
+  function focusSideNave(id) {
+    $(".side-nav a").each(function () {
+      $(this).removeClass("active");
+      if ($(this).data("value") === id) {
+        $(this).addClass("active").siblings().removeClass("active");
+      }
+    });
+  }
+  focusSideNave(id);
   $("#toggle").on("click", function () {
     processMenu(200);
   });
+  /* ----------- navbar ------------ */
+
   $(document).on("click", function (event) {
     if (!$(event.target).closest("#navbar").length) {
       processMenu(200, true);
     }
   });
+
   /* ----------- smooth scroll ------------ */
   $(".go-to").click(function () {
     let target = $("#" + $(this).data("value"));
     let targetOffset = target.offset().top - $("#navbar").outerHeight(true);
-    console.log(targetOffset);
+    // console.log(targetOffset);
     $("html, body").animate({ scrollTop: targetOffset }, 100);
+    focusNave($(this).data("value"));
+    focusSideNave($(this).data("value"));
+  });
+  
+  $(document).scroll(function () {
+    var y = $(this).scrollTop();
+    if (y > 300) {
+      $(".scroll-top").fadeIn();
+    } else {
+      $(".scroll-top").fadeOut();
+    }
   });
 })(jQuery);
