@@ -96,17 +96,16 @@ section {
 
   text-align: center;
   position: relative;
-  width: fit-content;
   margin: 0 auto;
   margin-bottom: 1rem;
 }
 .section-title::before {
   content: "";
-  width: 50%;
+  width: 100px;
   height: 2px;
   position: absolute;
   background-color: var(--primary-color);
-  left: 0;
+  left: calc(50% - 50px);
   bottom: -5px;
   border-radius: 1px;
 }
@@ -117,8 +116,10 @@ section {
   margin-top: 2rem;
 }
 section .more {
-  width: fit-content;
-  margin: 3rem auto 0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto 0rem auto;
 }
 /* --------------- navbar --------------- */
 ::-webkit-scrollbar {
@@ -620,6 +621,9 @@ header {
   /* Welcome-section */
   .Welcome-section {
     height: calc(100vh - 80px);
+  }
+  .about-section{
+    height: calc(100vh + 180px);
   }
   .scroll-top {
     right: 15px;
