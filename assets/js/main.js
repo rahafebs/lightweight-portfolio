@@ -69,7 +69,6 @@
   $(".go-to").click(function () {
     let target = $("#" + $(this).data("value"));
     let targetOffset = target.offset().top - $("#navbar").outerHeight(true);
-    // console.log(targetOffset);
     $("html, body").animate({ scrollTop: targetOffset }, 100);
     focusNave($(this).data("value"));
     focusSideNave($(this).data("value"));
@@ -107,6 +106,23 @@
     lightbox.fadeOut(function () {
       lightbox.css("display", "none");
       lightboxLink.css("display", "none");
+    });
+  });
+  /* ----------- projects gallery shuffle ------------ */
+  const projectItem = $(".project-container .item");
+  $(".shuffle a").click(function (e) {
+    $(this).addClass("active").siblings().removeClass("active");
+    e.preventDefault();
+    let type = $(this).data("value");
+    projectItem.each(function () {
+      let types = $(this).data("value").split(" ");
+      if (jQuery.inArray(type, types) !== -1) {
+        if ($(this).css("display") == "none") {
+          $(this).show();
+        }
+      } else {
+        $(this).hide();
+      }
     });
   });
 })(jQuery);
