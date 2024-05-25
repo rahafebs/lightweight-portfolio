@@ -1,9 +1,13 @@
 :root {
   --primary-color: #7c58d0;
+  --link-color: #7c58d0;
+  --link-hover-color: #0f172a;
+  --link-hover-secondary-color: #0f172a;
   --secondary-color: #1a171d;
   --primary-bg: #fff;
   --secondary-bg: #fbf7ff;
   --primary-text: #0f172a;
+  --active-color: #0f172a;
   --secondary-text: #4d5055;
   --transition-fast: all ease-in-out 0.05s;
   --transition-slow: all ease-in-out 0.2s;
@@ -86,7 +90,7 @@ a {
   transition: var(--transition-fast);
 }
 .btn:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--link-hover-secondary-color);
 }
 section {
   padding: 4rem;
@@ -211,10 +215,11 @@ header {
   gap: 1.05rem;
 }
 .nav-link.active {
-  color: var(--primary-text);
+  color: var(--active-color);
 }
 .navbar a {
   display: block;
+  color: var(--link-color);
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -222,7 +227,7 @@ header {
 }
 
 .navbar a:hover {
-  color: var(--primary-text);
+  color: var(--link-hover-color);
 }
 /* --------------- welcome-section --------------- */
 .Welcome-section {
@@ -267,7 +272,7 @@ header {
   position: absolute;
 }
 .Welcome-section .scroll-down:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--link-hover-secondary-color);
   bottom: 55px;
 }
 
@@ -493,6 +498,7 @@ header {
   letter-spacing: 1px;
   font-size: 0.88rem;
   font-weight: 500;
+  background-color: var(--secondary-bg);
 }
 .skill-container ul li:nth-child(even) {
   border: 2px solid var(--secondary-text);
@@ -533,9 +539,10 @@ header {
 .mail a {
   border-color: var(--secondary-text);
   border-width: 0;
+  transition: var(--transition-slow);
 }
 .mail a:hover {
-  color: var(--primary-color);
+  color: var(--link-hover-color);
 }
 .mail {
   border: 0;
@@ -562,7 +569,8 @@ header {
   color: var(--secondary-text);
   font-weight: 600;
 }
-.scroll-top {
+.scroll-top,
+.mode-change {
   position: fixed;
   bottom: 30px;
   right: 20px;
@@ -573,9 +581,20 @@ header {
   transition: var(--transition-slow);
   display: none;
 }
+.mode-change {
+  left: 30px;
+  right: unset;
+  display: block;
+}
+.mode-change .light {
+  display: none;
+}
 .scroll-top:hover {
   bottom: 35px;
-  background-color: var(--secondary-color);
+  background-color: var(--link-hover-secondary-color);
+}
+.mode-change:hover {
+  background-color: var(--link-hover-secondary-color);
 }
 .side-nav {
   position: fixed;
@@ -611,6 +630,8 @@ header {
   justify-content: center;
   align-items: center;
   z-index: 10000;
+  overflow: auto;
+  padding: 2rem;
 }
 .lightbox .image-box {
   display: flex;
@@ -629,7 +650,7 @@ header {
   max-height: 80%;
 }
 .close {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   font-size: 1.5rem;
@@ -639,6 +660,10 @@ header {
   padding: 5px 15px;
   cursor: pointer;
   border-radius: 5px;
+  transition: var(--transition-slow);
+}
+.close:hover{
+  background-color: var(--link-hover-secondary-color);
 }
 /* --------------- responsive --------------- */
 /* Extra Small Devices (Phones) */
@@ -719,9 +744,14 @@ header {
     height: calc(100vh + 180px);
   }
 
-  .scroll-top {
+  .scroll-top,
+  .mode-change {
     right: 15px;
     bottom: 15px;
+  }
+  .mode-change {
+    left: 15px;
+    right: unset;
   }
   .scroll-top:hover {
     bottom: 20px;
@@ -805,7 +835,8 @@ header {
   }
 }
 @media (max-height: 700px) {
-  .side-nav {
+  .side-nav,
+  .Welcome-section .scroll-down {
     display: none;
   }
 }
