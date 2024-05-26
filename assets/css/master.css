@@ -730,7 +730,8 @@ header {
   position: relative;
 }
 .project-container .item .project-image .img-loader-overlay {
-  display: flex;
+  /* display: flex; */
+  display: none;
   position: absolute;
   top: 0;
   bottom: 0;

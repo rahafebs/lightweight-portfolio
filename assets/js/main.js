@@ -124,12 +124,10 @@
     }
   });
   /* =================== projects gallery shuffle =================== */
-  $(".project-image img").each(function () {
-    $(this).on("load", function () {
-      $(this).parent(".project-image").children(".img-loader-overlay").hide();
-    });
-  });
-
+  // TO DO
+  // $(".project-image img").on('load', function(){
+  //   $(this).parent(".project-image").children(".img-loader-overlay").hide();
+  // })
   const projectItem = $(".project-container .item");
   $(".shuffle a").click(function (e) {
     $(this).addClass("active").siblings().removeClass("active");
@@ -149,6 +147,7 @@
   /* =================== testimonials =================== */
   const leftArrow = $(".testim-container .left"),
     rightArrow = $(".testim-container .right");
+
   function checkClients() {
     $(".client:first").hasClass("active")
       ? leftArrow.fadeOut()
