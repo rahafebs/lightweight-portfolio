@@ -132,7 +132,7 @@ section .more {
   align-items: center;
   margin: 3rem auto 0rem auto;
 }
-@keyframes border_animate {
+@keyframes border_animate_wide {
   0% {
     transform: translate(-50%, -50%) scale(0.8);
     opacity: 0.2;
@@ -142,6 +142,19 @@ section .more {
   }
   100% {
     transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0;
+  }
+}
+@keyframes border_animate {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
     opacity: 0;
   }
 }
@@ -473,7 +486,7 @@ header {
   height: 100px;
   background-color: var(--primary-color);
   opacity: 0.1;
-  animation: border_animate 2s linear infinite;
+  animation: border_animate_wide 2s linear infinite;
   z-index: -1;
   border-radius: 50px;
   transition: all linear 0.3s;
@@ -716,12 +729,40 @@ header {
   overflow: hidden;
   position: relative;
 }
+.project-container .item .project-image .img-loader-overlay{
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.project-container .item .project-image .img-loader-overlay span{
+  position: absolute;
+  content: "";
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  opacity: 1;
+  animation: border_animate 2s linear infinite;
+  z-index: -1;
+  border-radius: 50px;
+  transition: all linear 0.3s;
+}
 .project-container .item .project-image img {
   transition: var(--transition-slow);
   display: block;
   object-fit: cover;
   height: 350px;
   max-height: 350px;
+  z-index: -1;
+  width: 100%;
 }
 .project-container .item:hover .project-image img {
   transform: scale(1.01);
@@ -783,7 +824,7 @@ header {
 .testim-container .quote-icon svg {
   width: 50px;
   height: 50px;
-  color: var(--link-hover-color);
+  color: var(--primary-color);
   opacity: 0.8;
 }
 .testim-container .client {
@@ -796,7 +837,7 @@ header {
 .testim-container .client p {
   line-height: 1.8;
   letter-spacing: 1px;
-  font-size: 0.88rem;
+  font-size: 1rem;
 }
 .testim-container .client span {
   font-size: 0.85rem;
@@ -953,11 +994,15 @@ header {
 .side-nav {
   position: fixed;
   right: 30px;
-  top: calc(100vh / 3);
+  bottom: 35px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   gap: 1.5rem;
+  transition: var(--transition-slow);
+}
+.side-nav.slide{
+  bottom: 100px;
 }
 .side-nav a {
   height: 24px;
@@ -966,11 +1011,27 @@ header {
   opacity: 0.3;
   border-radius: 50%;
   transition: var(--transition-fast);
+  position: relative;
 }
 .side-nav a.active,
 .side-nav a:hover {
   opacity: 1;
 }
+.side-nav a.active::after{
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    opacity: 0.1;
+    animation: border_animate 2s linear infinite;
+    z-index: -1;
+    border-radius: 50px;
+    transition: all linear 0.3s;
+  }
+
 
 /* --------------- gallery lightbox --------------- */
 .lightbox {
@@ -1224,13 +1285,13 @@ header {
     flex-direction: column;
   }
   .project-container .item .project-image {
-    height: 200px;
-    max-height: 200px;
+    height: 300px;
+    max-height: 300px;
     overflow: hidden;
   }
   .project-container .item .project-image img {
-    height: 200px;
-    max-height: 200px;
+    height: 300px;
+    max-height: 300px;
   }
 }
 
@@ -1244,7 +1305,6 @@ header {
 @media (min-width: 1200px) {
   .container,
   .navbar {
-    width: 1199px;
     max-width: 1199px;
     margin-right: auto;
     margin-left: auto;

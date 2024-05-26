@@ -81,9 +81,11 @@
   $(document).scroll(function () {
     var y = $(this).scrollTop();
     if (y > 300) {
-      $(".scroll-top").fadeIn();
+      $(".scroll-top").fadeIn(200);
+      $(".side-nav").addClass('slide');
     } else {
-      $(".scroll-top").fadeOut();
+      $(".scroll-top").fadeOut(200);
+      $(".side-nav").removeClass('slide');
     }
   });
   /* =================== gallery lightbox =================== */
@@ -114,6 +116,10 @@
     });
   });
   /* =================== projects gallery shuffle =================== */
+  $('.project-image img').on('load', function() {
+    $('.img-loader-overlay').hide();
+  });
+  
   const projectItem = $(".project-container .item");
   $(".shuffle a").click(function (e) {
     $(this).addClass("active").siblings().removeClass("active");
