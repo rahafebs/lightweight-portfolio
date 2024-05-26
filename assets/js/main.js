@@ -1,6 +1,10 @@
 /* global bootstrap: false */
 (function ($) {
   "use strict";
+  /* =================== loader =================== */
+  $(window).on("load", function () {
+    $("#loader-overlay").fadeOut("slow");
+  });
   let id = window.location.href.split("?")[0].split("/").pop().substring(1);
 
   /* =================== side nav =================== */
@@ -89,6 +93,7 @@
   const lightboxTitle = lightbox.children(".image-box").children("h2");
   const lightboxLink = lightbox.children(".image-box").children("a");
   const galleryItem = $(".project-container a");
+  lightboxLink.css("display", "none");
   galleryItem.click(function (e) {
     e.preventDefault();
     lightbox.css("display", "flex");
@@ -124,6 +129,39 @@
         $(this).hide();
       }
     });
+  });
+  /* =================== testimonials =================== */
+  const leftArrow = $(".testim-container .left"),
+    rightArrow = $(".testim-container .right");
+  function checkClients() {
+    $(".client:first").hasClass("active")
+      ? leftArrow.fadeOut()
+      : leftArrow.fadeIn();
+    $(".client:last").hasClass("active")
+      ? rightArrow.fadeOut()
+      : rightArrow.fadeIn();
+  }
+  checkClients();
+  $(".testim-container .arrow").click(function () {
+    if ($(this).hasClass("right")) {
+      $(".testim-container .active").fadeOut(100, function () {
+        $(this)
+          .removeClass("active")
+          .next(".client")
+          .addClass("active")
+          .fadeIn();
+        checkClients();
+      });
+    } else {
+      $(".testim-container .active").fadeOut(100, function () {
+        $(this)
+          .removeClass("active")
+          .prev(".client")
+          .addClass("active")
+          .fadeIn();
+        checkClients();
+      });
+    }
   });
   /* =================== scheme color =================== */
   function light() {
