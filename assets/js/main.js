@@ -82,10 +82,10 @@
     var y = $(this).scrollTop();
     if (y > 300) {
       $(".scroll-top").fadeIn(200);
-      $(".side-nav").addClass('slide');
+      $(".side-nav").addClass("slide");
     } else {
       $(".scroll-top").fadeOut(200);
-      $(".side-nav").removeClass('slide');
+      $(".side-nav").removeClass("slide");
     }
   });
   /* =================== gallery lightbox =================== */
@@ -109,17 +109,25 @@
       lightboxLink.attr("href", $(this).data("href"));
     }
   });
-  close.click(function () {
+  function closeLightBox() {
     lightbox.fadeOut(function () {
       lightbox.css("display", "none");
       lightboxLink.css("display", "none");
     });
+  }
+  close.click(function () {
+    closeLightBox();
+  });
+  lightbox.on("click", function (event) {
+    if (!$(event.target).closest(".image-box").length) {
+      closeLightBox();
+    }
   });
   /* =================== projects gallery shuffle =================== */
-  $('.project-image img').on('load', function() {
-    $('.img-loader-overlay').hide();
+  $(".project-image img").on("load", function () {
+    $(".img-loader-overlay").hide();
   });
-  
+
   const projectItem = $(".project-container .item");
   $(".shuffle a").click(function (e) {
     $(this).addClass("active").siblings().removeClass("active");
@@ -169,6 +177,25 @@
       });
     }
   });
+
+  function autoSlideTestime() {
+    $(".testim-container .active").fadeOut(100, function () {
+      if ($(this).next(".client").length > 0) {
+        $(this)
+        .removeClass("active")
+        .next(".client")
+        .addClass("active")
+        .fadeIn();
+      } else {
+        $(this).removeClass("active").parent()
+          .find(">:first-child")
+          .addClass("active")
+          .fadeIn();
+      }
+      checkClients();
+    });
+  }
+  window.setInterval(autoSlideTestime, 6000);
   /* =================== scheme color =================== */
   function light() {
     $(".mode-change .light").hide();
