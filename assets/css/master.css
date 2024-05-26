@@ -729,7 +729,7 @@ header {
   overflow: hidden;
   position: relative;
 }
-.project-container .item .project-image .img-loader-overlay{
+.project-container .item .project-image .img-loader-overlay {
   display: flex;
   position: absolute;
   top: 0;
@@ -740,7 +740,7 @@ header {
   align-items: center;
   z-index: 1;
 }
-.project-container .item .project-image .img-loader-overlay span{
+.project-container .item .project-image .img-loader-overlay span {
   position: absolute;
   content: "";
   display: block;
@@ -1001,7 +1001,7 @@ header {
   gap: 1.5rem;
   transition: var(--transition-slow);
 }
-.side-nav.slide{
+.side-nav.slide {
   bottom: 100px;
 }
 .side-nav a {
@@ -1017,21 +1017,20 @@ header {
 .side-nav a:hover {
   opacity: 1;
 }
-.side-nav a.active::after{
-    position: absolute;
-    content: "";
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    background-color: var(--primary-color);
-    opacity: 0.1;
-    animation: border_animate 2s linear infinite;
-    z-index: -1;
-    border-radius: 50px;
-    transition: all linear 0.3s;
-  }
-
+.side-nav a.active::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background-color: var(--primary-color);
+  opacity: 0.1;
+  animation: border_animate 2s linear infinite;
+  z-index: -1;
+  border-radius: 50px;
+  transition: all linear 0.3s;
+}
 
 /* --------------- gallery lightbox --------------- */
 .lightbox {

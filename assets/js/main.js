@@ -124,8 +124,10 @@
     }
   });
   /* =================== projects gallery shuffle =================== */
-  $(".project-image img").on("load", function () {
-    $(".img-loader-overlay").hide();
+  $(".project-image img").each(function () {
+    $(this).on("load", function () {
+      $(this).parent(".project-image").children(".img-loader-overlay").hide();
+    });
   });
 
   const projectItem = $(".project-container .item");
@@ -182,12 +184,14 @@
     $(".testim-container .active").fadeOut(100, function () {
       if ($(this).next(".client").length > 0) {
         $(this)
-        .removeClass("active")
-        .next(".client")
-        .addClass("active")
-        .fadeIn();
+          .removeClass("active")
+          .next(".client")
+          .addClass("active")
+          .fadeIn();
       } else {
-        $(this).removeClass("active").parent()
+        $(this)
+          .removeClass("active")
+          .parent()
           .find(">:first-child")
           .addClass("active")
           .fadeIn();
