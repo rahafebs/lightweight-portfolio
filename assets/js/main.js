@@ -40,6 +40,7 @@
       }
     });
   };
+
   /* =================== navbar =================== */
   function focusNave(id) {
     $(".nav-link").each(function () {
@@ -77,9 +78,10 @@
     focusNave($(this).data("value"));
     focusSideNave($(this).data("value"));
   });
+
   /* =================== show / hide scroll to top =================== */
   $(document).scroll(function () {
-    var y = $(this).scrollTop();
+    let y = $(this).scrollTop();
     if (y > 300) {
       $(".scroll-top").fadeIn(200);
       $(".side-nav").addClass("slide");
@@ -88,6 +90,7 @@
       $(".side-nav").removeClass("slide");
     }
   });
+
   /* =================== gallery lightbox =================== */
   const projects = {
     sari: {
@@ -158,21 +161,22 @@
       $(this).parent(".project-image").children(".img-loader-overlay").hide();
     });
   });
-  const lightbox = $(".lightbox");
-  const close = $(".close");
-  const lightboxImg = lightbox.children(".image-box").children("img");
-  const lightboxTitle = lightbox.children(".image-box").find("h2");
-  const lightboxLink = lightbox.children(".image-box").find("a");
-  const lightboxEmbed = lightbox
-    .children(".image-box")
-    .children(".embed-container");
-  const lightboxIframe = lightbox
-    .children(".image-box")
-    .children(".embed-container")
-    .find("iframe");
-  const galleryItem = $(".project-container .item-link");
-  const lightBoxIcons = $(".lightbox .images-icons");
-  const lightBoxIcon = $(".lightbox .images-icons .icon-box img");
+  const lightbox = $(".lightbox"),
+    close = $(".close"),
+    lightboxImg = lightbox.children(".image-box").children("img"),
+    lightboxTitle = lightbox.children(".image-box").find("h2"),
+    lightboxLink = lightbox.children(".image-box").find("a"),
+    lightboxEmbed = lightbox
+      .children(".image-box")
+      .children(".embed-container"),
+    lightboxIframe = lightbox
+      .children(".image-box")
+      .children(".embed-container")
+      .find("iframe"),
+    galleryItem = $(".project-container .item-link"),
+    lightBoxIcons = $(".lightbox .images-icons"),
+    lightBoxIcon = $(".lightbox .images-icons .icon-box img");
+
   lightboxLink.css("display", "none");
   galleryItem.click(function (e) {
     e.preventDefault();
@@ -190,7 +194,6 @@
 
     if (projects[id].images.length > 0) {
       for (const imageIndex in projects[id].images) {
-        // console.log(projects[id].images[imageIndex]);
         lightBoxIconsHtml +=
           '<div class="icon-box"><img src="' +
           projects[id].images[imageIndex] +
@@ -246,8 +249,8 @@
       .siblings()
       .removeClass("active");
   });
-  /* =================== projects gallery shuffle =================== */
 
+  /* =================== projects gallery shuffle =================== */
   const projectItem = $(".project-container .item .item-link");
   $(".shuffle a").click(function (e) {
     $(this).addClass("active").siblings().removeClass("active");
@@ -264,6 +267,7 @@
       }
     });
   });
+
   /* =================== testimonials =================== */
   const leftArrow = $(".testim-container .left"),
     rightArrow = $(".testim-container .right");
@@ -301,7 +305,6 @@
     }
     window.clearInterval();
   });
-
   function autoSlideTestime() {
     $(".testim-container .active").fadeOut(100, function () {
       if ($(this).next(".client").length > 0) {
@@ -322,6 +325,7 @@
     });
   }
   window.setInterval(autoSlideTestime, 8000);
+
   /* =================== scheme color =================== */
   function light() {
     $(".mode-change .light").hide();
@@ -424,7 +428,6 @@
         scheme_color[scheme].section_gradient_bg
       );
   }
-
   function toggleTheme() {
     if (currentMode === "dark") {
       localStorage.setItem("theme_scheme", "light");
