@@ -38,6 +38,10 @@
 html {
   scroll-behavior: smooth;
 }
+html,
+body {
+  height: 100%;
+}
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -976,6 +980,7 @@ header {
   border-radius: 50%;
   transition: var(--transition-slow);
   display: none;
+  z-index: 900;
 }
 .mode-change {
   left: 30px;
@@ -1045,8 +1050,11 @@ header {
   justify-content: center;
   align-items: center;
   z-index: 10000;
-  overflow: auto;
-  padding: 2rem;
+  padding: 1.5rem;
+  /* flex-direction: column; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 8rem;
 }
 .lightbox .image-box {
   display: flex;
@@ -1054,21 +1062,68 @@ header {
   align-items: center;
   margin: auto;
   flex-direction: column;
+  flex: 1 0 auto;
+}
+.lightbox .image-box .caption {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  flex-direction: column;
   padding: 1rem;
 }
 .lightbox .image-box h2 {
   color: #fff;
   font-size: 1rem;
-  margin: 1.5rem 0rem 1rem;
 }
-.lightbox img {
-  max-width: 80%;
-  max-height: 80%;
+.lightbox img,
+.lightbox .embed-container {
+  max-width: calc(100vw - 200px);
+}
+.lightbox .images-icons {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: fixed;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.lightbox .images-icons .icon-box {
+  width: 50px;
+  height: 50px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.lightbox .images-icons .icon-box img {
+  object-fit: cover;
+  max-width: 46px;
+  max-height: 200px;
+  opacity: 0.5;
+}
+.lightbox .images-icons .icon-box.active {
+  border-color: var(--primary-color);
+}
+.lightbox .images-icons .icon-box.active img {
+  opacity: 1;
 }
 .close {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 25px;
   font-size: 1.5rem;
   background-color: var(--primary-color);
   color: #fff;
@@ -1080,6 +1135,28 @@ header {
 }
 .close:hover {
   background-color: var(--link-hover-secondary-color);
+}
+.embed-container {
+  /* position: relative; */
+  display: none;
+  height: 0;
+  overflow: hidden;
+  max-width: calc(100vw - 200px);
+  width: calc(100vw - 200px);
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: calc(100vw - 200px);
+  height: calc(100vh - 100px);
 }
 /* --------------- responsive --------------- */
 /* Extra Small Devices (Phones) */
@@ -1208,10 +1285,11 @@ header {
   }
 }
 @media (max-width: 767px) {
-  .testim-container .right,.testim-container .left {
-   display: none;
+  .testim-container .right,
+  .testim-container .left {
+    display: none;
   }
-  .testim-container .client{
+  .testim-container .client {
     padding: 1rem 0rem;
   }
   .banner-vector img {
@@ -1300,6 +1378,33 @@ header {
     height: 300px;
     max-height: 300px;
   }
+  .lightbox img,
+  .lightbox .embed-container {
+    max-width: calc(100vw - 130px);
+  }
+  .lightbox .images-icons {
+    right: 10px;
+  }
+  .lightbox .images-icons .icon-box {
+    width: 30px;
+    height: 30px;
+  }
+  .lightbox .images-icons .icon-box img {
+    max-width: 27px !important;
+    max-height: 27px !important;
+  }
+  .close {
+    right: 15px !important;
+    font-size: 1rem;
+  }
+  .lightbox .image-box h2,
+  .lightbox .btn {
+    font-size: 0.88rem;
+  }
+  .lightbox {
+    padding: 1rem;
+    padding-bottom: 7rem;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -1329,6 +1434,18 @@ header {
   .side-nav,
   .Welcome-section .scroll-down {
     display: none;
+  }
+  .lightbox .images-icons .icon-box {
+    width: 30px;
+    height: 30px;
+  }
+  .lightbox .images-icons .icon-box img {
+    max-width: 27px;
+    max-height: 27px;
+  }
+  .close {
+    right: 20px;
+    font-size: 1rem;
   }
 }
 

@@ -89,31 +89,128 @@
     }
   });
   /* =================== gallery lightbox =================== */
-
-  $(".project-image img").each(function(){
-    $(this).on('load', function(){
+  const projects = {
+    sari: {
+      title: "SARI - Multipurpose Blogging WordPress Theme",
+      href: "https://itechonics.com/",
+      type: "web",
+      tags: ["Web Design", "Web Development"],
+      images: [
+        "assets/images/project/sari/01.avif",
+        "assets/images/project/sari/02.avif",
+        "assets/images/project/sari/03.avif",
+        "assets/images/project/sari/04.avif",
+        "assets/images/project/sari/05.avif",
+        "assets/images/project/sari/06.avif",
+      ],
+    },
+    kremsi: {
+      title: "Kremsi - Wordpress Agency Theme",
+      href: "https://alnahdalarabia.com/en",
+      embed: "",
+      type: "web",
+      tags: ["Web Design", "Web Development"],
+      images: [
+        "assets/images/project/kremsi/01.avif",
+        "assets/images/project/kremsi/02.avif",
+        "assets/images/project/kremsi/03.avif",
+        "assets/images/project/kremsi/04.avif",
+        "assets/images/project/kremsi/05.avif",
+      ],
+    },
+    syshop: {
+      title: "SyriaShops Website",
+      href: "",
+      embed: "",
+      type: "web",
+      tags: ["Web Design", "Web Development"],
+      images: [
+        "assets/images/project/syshop/01.avif",
+        "assets/images/project/syshop/02.avif",
+        "assets/images/project/syshop/03.avif",
+        "assets/images/project/syshop/04.avif",
+        "assets/images/project/syshop/05.avif",
+        "assets/images/project/syshop/06.avif",
+        "assets/images/project/syshop/07.avif",
+      ],
+    },
+    soul: {
+      title: "Islamic Videos Design",
+      href: "https://www.youtube.com/playlist?list=PLKN9mLJOZBdUh_QyVcl8zWW_5CUxZbOBh",
+      embed:
+        "https://www.youtube.com/embed/videoseries?si=4dPVFXsprjOqHopv&amp;list=PLKN9mLJOZBdUh_QyVcl8zWW_5CUxZbOBh&rel=0",
+      type: "video",
+      tags: ["Video Design"],
+      images: [],
+    },
+    promo: {
+      title: "Promotional Video Design",
+      href: "https://www.youtube.com/playlist?list=PLKN9mLJOZBdVOvtLYBFgva3mlkhXmfGiD",
+      embed:
+        "https://www.youtube.com/embed/videoseries?si=tB0qhnjN6XEPz4eu&amp;list=PLKN9mLJOZBdVOvtLYBFgva3mlkhXmfGiD&rel=0",
+      type: "video",
+      tags: ["Video Design"],
+      images: [],
+    },
+  };
+  $(".project-image img").each(function () {
+    $(this).on("load", function () {
       $(this).parent(".project-image").children(".img-loader-overlay").hide();
-      
-    })
-  })
+    });
+  });
   const lightbox = $(".lightbox");
   const close = $(".close");
   const lightboxImg = lightbox.children(".image-box").children("img");
-  const lightboxTitle = lightbox.children(".image-box").children("h2");
-  const lightboxLink = lightbox.children(".image-box").children("a");
+  const lightboxTitle = lightbox.children(".image-box").find("h2");
+  const lightboxLink = lightbox.children(".image-box").find("a");
+  const lightboxEmbed = lightbox
+    .children(".image-box")
+    .children(".embed-container");
+  const lightboxIframe = lightbox
+    .children(".image-box")
+    .children(".embed-container")
+    .find("iframe");
   const galleryItem = $(".project-container .item-link");
+  const lightBoxIcons = $(".lightbox .images-icons");
+  const lightBoxIcon = $(".lightbox .images-icons .icon-box img");
   lightboxLink.css("display", "none");
   galleryItem.click(function (e) {
     e.preventDefault();
+    const id = $(this).data("id");
     lightbox.css("display", "flex");
     lightbox.fadeIn();
     lightboxImg.attr("src", e.target.src);
-    lightboxTitle.text($(this).data("title"));
 
-    if ($(this).data("href") != "") {
+    lightboxTitle.text(projects[id].title);
+    lightBoxIcons.css("display", "flex");
+    let lightBoxIconsHtml =
+      '<div class="icon-box active"><img src="' +
+      e.target.src +
+      '" alt="project image" width="50" height="50" data-type="web"></div>';
+
+    if (projects[id].images.length > 0) {
+      for (const imageIndex in projects[id].images) {
+        // console.log(projects[id].images[imageIndex]);
+        lightBoxIconsHtml +=
+          '<div class="icon-box"><img src="' +
+          projects[id].images[imageIndex] +
+          '" alt="project image" width="50" height="50" data-type="' +
+          projects[id].type +
+          '"></div>';
+      }
+    } else {
+      lightBoxIconsHtml +=
+        '<div class="icon-box"><img src="assets/images/project/video.avif" alt="project image" width="50" height="50" data-type="' +
+        projects[id].type +
+        '" data-embed="' +
+        projects[id].embed +
+        '"></div>';
+    }
+    lightBoxIcons.html(lightBoxIconsHtml);
+    if (projects[id].href != "") {
       lightboxLink.css("display", "block");
       lightboxLink.text("Learn More");
-      lightboxLink.attr("href", $(this).data("href"));
+      lightboxLink.attr("href", projects[id].href);
     }
   });
   function closeLightBox() {
@@ -121,26 +218,43 @@
       lightbox.css("display", "none");
       lightboxLink.css("display", "none");
       lightboxImg.attr("src", "");
-    lightboxTitle.text("");
+      lightboxImg.show();
+      lightboxTitle.text("");
+      lightBoxIcons.html("");
+      lightboxEmbed.hide();
+      lightboxIframe.attr("src", "");
     });
   }
   close.click(function () {
     closeLightBox();
   });
-  lightbox.on("click", function (event) {
-    if (!$(event.target).closest(".image-box img").length) {
-      closeLightBox();
+
+  $("body").on("click", lightBoxIcon, function (e) {
+    if ($(e.target).data("type") === "web") {
+      lightboxImg.show();
+      lightboxImg.attr("src", e.target.src);
+      lightboxEmbed.hide();
+    } else if ($(e.target).data("type") === "video") {
+      lightboxImg.attr("src", "");
+      lightboxImg.hide();
+      lightboxEmbed.show();
+      lightboxIframe.attr("src", $(e.target).data("embed"));
     }
+    $(e.target)
+      .parent(".icon-box")
+      .addClass("active")
+      .siblings()
+      .removeClass("active");
   });
   /* =================== projects gallery shuffle =================== */
-  
+
   const projectItem = $(".project-container .item .item-link");
   $(".shuffle a").click(function (e) {
     $(this).addClass("active").siblings().removeClass("active");
     e.preventDefault();
     let type = $(this).data("value");
     projectItem.each(function () {
-      let types = $(this).data("value").split(" ");
+      let types = String($(this).data("value")).split(" ");
       if (jQuery.inArray(type, types) !== -1) {
         if ($(this).parent().css("display") == "none") {
           $(this).parent().show();
