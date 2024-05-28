@@ -86,6 +86,7 @@ a,
 .Welcome-section .scroll-down,
 .projects-section .shuffle a,
 .project-container .item .project-image img,
+.project-container .item .project-image .project-link,
 .project-container .item .title h3,
 .testim-container .right,
 .testim-container .left,
@@ -95,7 +96,9 @@ a,
 .scroll-top,
 .mode-change,
 .close,
-.navbar ul {
+.show-desc,
+.navbar ul,
+.project-container .item:hover h3 a {
   transition: var(--transition-slow);
 }
 a {
@@ -606,7 +609,7 @@ header {
 }
 .exp-container .item h3,
 .cert-container .item h3,
-.project-container .item h3,
+.project-container .item h3 a,
 .edu-container .item h3 {
   font-size: 1.05rem;
 }
@@ -718,7 +721,7 @@ header {
 }
 .projects-section .shuffle a {
   border: 2px solid var(--primary-color);
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   border-radius: 50px;
   color: var(--primary-text);
   font-size: 0.89rem;
@@ -726,6 +729,7 @@ header {
 .projects-section .shuffle a.active {
   background-color: var(--primary-color);
   color: #fff;
+  padding: 0.5rem 2rem;
 }
 .project-container {
   grid-template-columns: repeat(3, 1fr);
@@ -735,11 +739,39 @@ header {
   overflow: hidden;
   background-color: var(--secondary-bg);
 }
+.project-container .item h3 a {
+  color: var(--primary-text);
+}
+.project-container .item .item-link {
+  cursor: pointer;
+}
 .project-container .item .project-image {
   height: 350px;
   max-height: 350px;
   overflow: hidden;
   position: relative;
+}
+.project-container .item .project-image .project-link {
+  position: absolute;
+  background: var(--primary-color);
+  color: #fff;
+  z-index: 3;
+  right: 15px;
+  top: 15px;
+  display: flex;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+.project-container .item .project-image .project-link:hover {
+  background-color: var(--link-hover-secondary-color);
+}
+.project-container .item .project-image .project-link svg {
+  width: 20px;
+  height: 20px;
 }
 .project-container .item .project-image .img-loader-overlay {
   display: flex;
@@ -780,9 +812,14 @@ header {
   transform: scale(1.01);
   opacity: 0.9;
 }
-.project-container .item:hover h3 {
-  color: var(--primary-color);
+.project-container .item:hover .project-image .project-link {
+  opacity: 1;
 }
+.project-container .item:hover h3 a,
+.project-container .item:hover h3 {
+  color: var(--link-hover-color);
+}
+
 .project-container .item .title {
   color: var(--primary-text);
   padding: 20px;
@@ -1090,7 +1127,7 @@ header {
   gap: 1rem;
   position: fixed;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-image: var(--section-gradient-bg);
   top: 50%;
   right: 15px;
   transform: translateY(-50%);
@@ -1101,7 +1138,7 @@ header {
 .lightbox .images-icons .icon-box {
   width: 50px;
   height: 50px;
-  border: 2px solid transparent;
+  border: 2px solid var(--secondary-bg);
   overflow: hidden;
   border-radius: 2px;
 }
@@ -1109,7 +1146,7 @@ header {
   object-fit: cover;
   max-width: 46px;
   max-height: 200px;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 .lightbox .images-icons .icon-box.active {
   border-color: var(--primary-color);
@@ -1117,20 +1154,57 @@ header {
 .lightbox .images-icons .icon-box.active img {
   opacity: 1;
 }
-.close {
+.lightbox .pro-desc {
   position: fixed;
-  top: 20px;
-  right: 25px;
-  font-size: 1.5rem;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  left: 15px;
+  right: calc(100vw / 2);
+  top: 120px;
+  padding: 1.5rem 2rem;
+  border-radius: 5px;
+  line-height: 2;
+  display: none;
+  font-size: 0.88rem;
+}
+.lightbox .pro-desc p {
+  margin-right: 2rem;
+  text-align: justify;
+}
+.close,
+.show-desc,
+.close-desc {
+  position: fixed;
+  top: 25px;
+  left: 15px;
   background-color: var(--primary-color);
   color: #fff;
   border: none;
-  padding: 5px 15px;
+  padding: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
 }
-.close:hover {
+.close svg,
+.show-desc svg,
+.close-desc svg {
+  width: 20px;
+  height: 20px;
+}
+.close:hover,
+.show-desc:hover {
   background-color: var(--link-hover-secondary-color);
+}
+.show-desc {
+  top: 70px;
+  display: none;
+}
+.close-desc {
+  left: auto;
+  right: 0.5rem;
+  top: 1rem;
+  position: absolute;
+  background-color: transparent;
+  color: var(--primary-text);
 }
 .embed-container {
   display: none;
@@ -1270,6 +1344,9 @@ header {
   .side-nav {
     display: none;
   }
+  .lightbox .pro-desc {
+    right: calc(100vw / 3);
+  }
 }
 @media (max-width: 767px) {
   .testim-container .right,
@@ -1343,7 +1420,7 @@ header {
   }
   .exp-container .item h3,
   .cert-container .item h3,
-  .project-container .item h3,
+  .project-container .item h3 a,
   .edu-container .item h3 {
     font-size: 1rem;
   }
@@ -1380,10 +1457,7 @@ header {
     max-width: 27px !important;
     max-height: 27px !important;
   }
-  .close {
-    right: 15px !important;
-    font-size: 1rem;
-  }
+
   .lightbox .image-box h2,
   .lightbox .btn {
     font-size: 0.88rem;
@@ -1391,6 +1465,9 @@ header {
   .lightbox {
     padding: 1rem;
     padding-bottom: 7rem;
+  }
+  .lightbox .pro-desc {
+    right: 70px;
   }
 }
 
@@ -1431,10 +1508,6 @@ header {
   .lightbox .images-icons .icon-box img {
     max-width: 27px;
     max-height: 27px;
-  }
-  .close {
-    right: 20px;
-    font-size: 1rem;
   }
 }
 

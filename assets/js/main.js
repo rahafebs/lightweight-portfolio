@@ -97,7 +97,7 @@
       title: "SARI - Multipurpose Blogging WordPress Theme",
       href: "https://itechonics.com/",
       type: "web",
-      tags: ["Web Design", "Web Development"],
+      tags: ["Web Design", "Web Development", "wordpress"],
       images: [
         "assets/images/project/sari/01.avif",
         "assets/images/project/sari/02.avif",
@@ -106,13 +106,22 @@
         "assets/images/project/sari/05.avif",
         "assets/images/project/sari/06.avif",
       ],
+      description:
+        "SARI is a versatile and feature-rich blog theme designed for multiple authors. \
+      It boasts a full-width header with an interactive slider to showcase featured posts and topics. \
+      This theme is highly customizable, making it suitable for various blog niches including technology, \
+      fashion, travel, food, and photography. SARI is translation-ready and supports right-to-left (RTL) languages, \
+      offering both light and dark modes for a personalized experience. \
+      Take advantage of SARI's promo boxes feature to display advertisements or highlight popular posts. \
+      Additionally, customizable widgets and an integrated contact form enhance user engagement. \
+      By integrating Google reCAPTCHA v3, SARI helps prevent messaging and commenting spam effectively.",
     },
     kremsi: {
       title: "Kremsi - Wordpress Agency Theme",
       href: "https://alnahdalarabia.com/en",
       embed: "",
       type: "web",
-      tags: ["Web Design", "Web Development"],
+      tags: ["Web Design", "Web Development", "wordpress"],
       images: [
         "assets/images/project/kremsi/01.avif",
         "assets/images/project/kremsi/02.avif",
@@ -120,6 +129,13 @@
         "assets/images/project/kremsi/04.avif",
         "assets/images/project/kremsi/05.avif",
       ],
+      description:
+        "Kremsi is a feature-rich agency theme designed for multiple authors, offering ample customization options. \
+      It includes a full-width header with an interactive slider to showcase featured projects and topics. \
+      Suitable for agency niches like real estate and commercial, Kremsi is translation-ready and supports right-to-left (RTL) languages. \
+      The theme also features customizable widgets, an integrated contact form, job and rating applications. \
+      By integrating Google reCAPTCHA v3, Kremsi effectively prevents messaging spam. \
+      Developed for Alnahda Al-Arabiah Attijaria Company, Kremsi is tailored to meet the needs of modern agencies.",
     },
     syshop: {
       title: "SyriaShops Website",
@@ -136,6 +152,35 @@
         "assets/images/project/syshop/06.avif",
         "assets/images/project/syshop/07.avif",
       ],
+      description:
+        "SyriaShops is a cutting-edge E-Commerce platform that offers users a comprehensive selection of \
+      products, stores, and exclusive deals. Our goal is to streamline the shopping experience for customers by providing a \
+      diverse range of options to meet their daily purchasing needs. Additionally, we empower stores to effectively showcase \
+      their brands and reach a wider audience of customers with ease and flexibility. With SyriaShops, \
+      convenience and accessibility are at the forefront of our mission to enhance the online shopping experience for all.",
+    },
+    yeni: {
+      title: "YENI - Portfolio WordPress Theme",
+      href: "",
+      embed: "",
+      type: "web",
+      tags: ["Web Design", "Web Development", "wordpress"],
+      images: [
+        "assets/images/project/yeni/01.avif",
+        "assets/images/project/yeni/02.avif",
+        "assets/images/project/yeni/03.avif",
+        "assets/images/project/yeni/04.avif",
+        "assets/images/project/yeni/05.avif",
+        "assets/images/project/yeni/06.avif",
+        "assets/images/project/yeni/07.avif",
+        "assets/images/project/yeni/08.avif",
+      ],
+      description:
+        "YENI is a versatile and feature-rich portfolio theme designed for multi-purpose use. \
+        Highly customizable, it caters to a wide range of users. \
+        With both light and dark modes available for a personalized touch, customizable widgets, \
+        ready-to-use blocks, and an integrated contact form enhance user engagement. \
+        Integration of Google reCAPTCHA v3 effectively prevents messaging and commenting spam.",
     },
     soul: {
       title: "Islamic Videos Design",
@@ -145,6 +190,7 @@
       type: "video",
       tags: ["Video Design"],
       images: [],
+      description: null,
     },
     promo: {
       title: "Promotional Video Design",
@@ -154,6 +200,7 @@
       type: "video",
       tags: ["Video Design"],
       images: [],
+      description: null,
     },
   };
   $(".project-image img").each(function () {
@@ -163,6 +210,9 @@
   });
   const lightbox = $(".lightbox"),
     close = $(".close"),
+    info = $(".pro-desc"),
+    showInfo = $(".show-desc"),
+    hideInfo = $(".close-desc"),
     lightboxImg = lightbox.children(".image-box").children("img"),
     lightboxTitle = lightbox.children(".image-box").find("h2"),
     lightboxLink = lightbox.children(".image-box").find("a"),
@@ -182,9 +232,7 @@
     e.preventDefault();
     const id = $(this).data("id");
     lightbox.css("display", "flex");
-    lightbox.fadeIn();
     lightboxImg.attr("src", e.target.src);
-
     lightboxTitle.text(projects[id].title);
     lightBoxIcons.css("display", "flex");
     let lightBoxIconsHtml =
@@ -215,6 +263,10 @@
       lightboxLink.text("Learn More");
       lightboxLink.attr("href", projects[id].href);
     }
+    if (projects[id].description !== null) {
+      info.find("p").text(projects[id].description);
+      showInfo.show();
+    }
   });
   function closeLightBox() {
     lightbox.fadeOut(function () {
@@ -226,12 +278,24 @@
       lightBoxIcons.html("");
       lightboxEmbed.hide();
       lightboxIframe.attr("src", "");
+      info.find("p").text("");
+      showInfo.hide();
     });
   }
   close.click(function () {
     closeLightBox();
   });
-
+  showInfo.click(function () {
+    info.fadeIn(200);
+  });
+  $(document).on("click", function (event) {
+    if (!$(event.target).closest(".desc-box").length) {
+      info.fadeOut(200);
+    }
+  });
+  hideInfo.click(function () {
+    info.fadeOut(200);
+  });
   $("body").on("click", lightBoxIcon, function (e) {
     if ($(e.target).data("type") === "web") {
       lightboxImg.show();
@@ -259,8 +323,8 @@
     projectItem.each(function () {
       let types = String($(this).data("value")).split(" ");
       if (jQuery.inArray(type, types) !== -1) {
-        if ($(this).parent().css("display") == "none") {
-          $(this).parent().show();
+        if ($(this).parent().css("display") === "none") {
+          $(this).parent().fadeIn(100);
         }
       } else {
         $(this).parent().hide();
@@ -275,11 +339,11 @@
   function checkClients() {
     if ($(window).width() > 767) {
       $(".client:first").hasClass("active")
-        ? leftArrow.fadeOut()
-        : leftArrow.fadeIn();
+        ? leftArrow.hide()
+        : leftArrow.show();
       $(".client:last").hasClass("active")
-        ? rightArrow.fadeOut()
-        : rightArrow.fadeIn();
+        ? rightArrow.hide()
+        : rightArrow.show();
     }
   }
   checkClients();
